@@ -5,98 +5,271 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>My personal Mixes</title>
     <style>
-      body {
+      :root{
+        --text: rgba(255,255,255,.92);
+        --muted: rgba(255,255,255,.72);
+        --card: rgba(20, 18, 40, .52);
+        --card-border: rgba(255,255,255,.14);
+        --shadow: rgba(0,0,0,.35);
+      }
+
+      * { box-sizing: border-box; }
+      html, body { height: 100%; }
+
+      body{
         margin: 0;
         padding: 16px;
         font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
         line-height: 1.4;
+        color: var(--text);
+        overflow-x: hidden;
+
+        background:
+          radial-gradient(900px 500px at 10% 10%, rgba(255,0,180,.35), transparent 55%),
+          radial-gradient(700px 520px at 85% 20%, rgba(0,255,255,.28), transparent 60%),
+          radial-gradient(650px 450px at 55% 80%, rgba(255,255,0,.20), transparent 55%),
+          linear-gradient(120deg, #09061a 0%, #130a2a 45%, #070514 100%);
       }
-      ol {
-        padding-left: 20px;
+
+      .bg-blob{
+        position: fixed;
+        inset: -40vmax;
+        pointer-events: none;
+        z-index: -1;
+        filter: blur(40px) saturate(120%);
+        opacity: .85;
+        background:
+          conic-gradient(
+            from 90deg,
+            rgba(255,0,180,.25),
+            rgba(0,255,255,.22),
+            rgba(255,255,0,.18),
+            rgba(0,255,120,.20),
+            rgba(255,0,180,.25)
+          );
+        animation: spinFloat 14s linear infinite;
+      }
+
+      @keyframes spinFloat{
+        0%   { transform: translate3d(0,0,0) rotate(0deg) scale(1.02); }
+        50%  { transform: translate3d(4%, -2%, 0) rotate(180deg) scale(1.08); }
+        100% { transform: translate3d(0,0,0) rotate(360deg) scale(1.02); }
+      }
+
+      .fx{
+        position: fixed;
+        inset: 0;
+        pointer-events: none;
+        z-index: -1;
+      }
+      .fx::before{
+        content:"";
+        position:absolute; inset:0;
+        background:
+          repeating-linear-gradient(
+            to bottom,
+            rgba(255,255,255,.05),
+            rgba(255,255,255,0) 3px,
+            rgba(255,255,255,0) 7px
+          );
+        opacity: .18;
+        mix-blend-mode: overlay;
+      }
+      .fx::after{
+        content:"";
+        position:absolute; inset:-20%;
+        background-image:
+          url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)' opacity='.35'/%3E%3C/svg%3E");
+        opacity: .12;
+        transform: rotate(6deg);
+        animation: noiseDrift 6s steps(2) infinite;
+      }
+      @keyframes noiseDrift{
+        0% { transform: translate(0,0) rotate(6deg); }
+        25% { transform: translate(-2%, 1%) rotate(6deg); }
+        50% { transform: translate(-1%, -2%) rotate(6deg); }
+        75% { transform: translate(2%, 2%) rotate(6deg); }
+        100% { transform: translate(0,0) rotate(6deg); }
+      }
+
+      ol{
+        padding-left: 0;
         margin: 0;
+        list-style: none;
+        display: grid;
+        gap: 12px;
       }
-      li {
-        margin: 10px 0;
-      }
-      a {
+
+      li{ margin: 0; }
+
+      a{
         display: inline-block;
         width: 100%;
         max-width: 560px;
-        box-sizing: border-box;
-        padding: 12px 14px;
-        border: 1px solid #e5e5e5;
-        border-radius: 10px;
+        padding: 14px 14px;
+        border-radius: 16px;
         text-decoration: none;
         color: inherit;
-        background: #fff;
+
+        background: var(--card);
+        border: 1px solid var(--card-border);
+        box-shadow:
+          0 10px 30px var(--shadow),
+          inset 0 0 0 1px rgba(255,255,255,.06);
+
         word-break: break-word;
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+
+        position: relative;
+        overflow: hidden;
+
+
+        transform: translateZ(0);
+        transition: transform .2s ease, border-color .2s ease, background .2s ease;
       }
-      a:active,
-      a:hover {
-        border-color: #cfcfcf;
-        background: #fafafa;
+
+
+      a::before{
+        content:"";
+        position:absolute;
+        inset: -2px;
+        background: conic-gradient(
+          from 180deg,
+          rgba(255,0,180,.7),
+          rgba(0,255,255,.7),
+          rgba(255,255,0,.65),
+          rgba(0,255,120,.65),
+          rgba(255,0,180,.7)
+        );
+        opacity: .0;
+        transition: opacity .2s ease;
+        filter: blur(8px);
+      }
+
+      a:hover{
+        transform: translateY(-2px);
+        border-color: rgba(255,255,255,.22);
+        background: rgba(25, 18, 55, .56);
+      }
+      a:hover::before{ opacity: .85; }
+
+      a::after{
+        content:"";
+        position:absolute;
+        inset: 0;
+        background: linear-gradient(
+          120deg,
+          transparent 0%,
+          rgba(255,255,255,.18) 45%,
+          transparent 60%
+        );
+        transform: translateX(-120%);
+        transition: transform .55s ease;
+        mix-blend-mode: overlay;
+      }
+      a:hover::after{ transform: translateX(120%); }
+
+      body > ol{
+        padding-top: 6px;
+      }
+
+
+      .wrap{
+        display: flex;
+        justify-content: center;
+      }
+      .list{
+        width: 100%;
+        max-width: 560px;
+      }
+
+      .corner-notice{
+        position: fixed;
+        right: 12px;
+        bottom: 12px;
+        max-width: min(320px, calc(100vw - 24px));
+        z-index: 9999;
+
+        display: block;
+        padding: 10px 12px;
+        background: rgba(0,0,0,.28);
+        color: rgba(255,255,255,.94);
+        border: 1px solid rgba(255,255,255,.16);
+        border-radius: 14px;
+
+        font: 700 12.5px/1.25 system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+
+        box-shadow: 0 14px 40px rgba(0,0,0,.35);
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+
+        text-align: left;
+
+        position: fixed;
+        overflow: hidden;
+      }
+
+      .corner-notice::before{
+        content:"";
+        position:absolute;
+        inset:-2px;
+        background: conic-gradient(
+          from 90deg,
+          rgba(255,0,180,.65),
+          rgba(0,255,255,.65),
+          rgba(255,255,0,.55),
+          rgba(0,255,120,.55),
+          rgba(255,0,180,.65)
+        );
+        opacity: .35;
+        filter: blur(10px);
+      }
+
+      .corner-notice__text{
+        position: relative;
+        z-index: 1;
+      }
+
+      @media (max-width: 420px){
+        body{ padding: 14px; }
+        .corner-notice{
+          right: 10px; bottom: 10px;
+          padding: 9px 11px;
+          border-radius: 12px;
+          font-size: 12px;
+        }
+      }
+
+      @media (prefers-reduced-motion: reduce){
+        .bg-blob, .fx::after { animation: none !important; }
+        a, a::after { transition: none !important; }
       }
     </style>
   </head>
+
   <body>
-    <ol>
-      <li><a href="https://mega.nz/file/caN3QCAC#oVYH8q-8zQpGMeyMGZ3fzYEPTnv43ONIYUJ48DrRmAY!1v1c" target="_blank" rel="noopener">vrahnos - Classic Trance</a></li>
-      <li><a href="https://mega.nz/file/pS9EESDL#FoO2CtI2fuyGq9t_Qkue2vdPeqENwajbEbqL59-60so!1v1c" target="_blank" rel="noopener">vrahnos - Year mix 2023</a></li>
-      <li><a href="https://mega.nz/file/0ScF3AQA#Apt5tJrXdFkVYmzD-1wMxBnO0YvzT7oL_zNp41UdOOw!1v1c" target="_blank" rel="noopener">vrahnos - Vocal mix</a></li>
-      <li><a href="https://mega.nz/file/sblERajQ#6draqG7Bh2O0wEPdeGRkl4_thqG91Lte-LfM6pStRg4!1v1c" target="_blank" rel="noopener">vrahnos - Summer 2024</a></li>
-      <li><a href="https://mega.nz/file/RbNwHTgC#GgjwUIdV4W2v2_lDNftpUz7OMVQ6fvu9bQkhUFoqcmk!1v1c" target="_blank" rel="noopener">Soam - Zachariah's mix</a></li>
-      <li><a href="https://mega.nz/file/MbMj0QTQ#BkGS_X8cjFWgNQK1NWD6lJxt1PN5QXiEDO9Rn153c2s!1v1c" target="_blank" rel="noopener">JNos - Diki</a></li>
-      <li><a href="https://mega.nz/file/1fNBBT7T#CBhsCdJl_KPa36L7d-CGRahUDBplMaZaBWBRIXORtqM!1v1c" target="_blank" rel="noopener">vrahnos - Vocal mix 2026</a></li>
-      <li><a href="https://mega.nz/file/hXVliSpL#ekMV3jpReQ7ntJQenxYoo71bYuEZzqL-xFc6dARXNIY!1v1c" target="_blank" rel="noopener">CNos - Chilledmix (vocal downtempo, acoustic)</a></li>
-      <li><a href="https://mega.nz/file/If1x1Z4T#QEDw_KvWC9SsHl-xQOK2lxglJP9eiJ4vMjID2-8bItg" target="_blank" rel="noopener">JNos - Prioni (acid/hard)</a></li>
-      <li><a href="https://mega.nz/file/ETkzRD5B#3wLKP8k3tREiq-Us_2D8YJFLLdtmgm_GACqKpKrUBjk" target="_blank" rel="noopener">vrahnos - Apollo 18 (progressive/deep)</a></li>
-      <li><a href="https://mega.nz/file/cfcHSQwB#ZElmwVmd8VtQjErHV-7A2sP6KvxD_pXGHj8rOBdUTmQ" target="_blank" rel="noopener">vrahnos - Allou (emotional, no vocals)</a></li>
+    <div class="bg-blob" aria-hidden="true"></div>
+    <div class="fx" aria-hidden="true"></div>
 
+    <div class="wrap">
+      <ol class="list">
+        <li><a href="https://mega.nz/file/caN3QCAC#oVYH8q-8zQpGMeyMGZ3fzYEPTnv43ONIYUJ48DrRmAY!1v1c" target="_blank" rel="noopener">vrahnos - Classic Trance</a></li>
+        <li><a href="https://mega.nz/file/pS9EESDL#FoO2CtI2fuyGq9t_Qkue2vdPeqENwajbEbqL59-60so!1v1c" target="_blank" rel="noopener">vrahnos - Year mix 2023</a></li>
+        <li><a href="https://mega.nz/file/0ScF3AQA#Apt5tJrXdFkVYmzD-1wMxBnO0YvzT7oL_zNp41UdOOw!1v1c" target="_blank" rel="noopener">vrahnos - Vocal mix</a></li>
+        <li><a href="https://mega.nz/file/sblERajQ#6draqG7Bh2O0wEPdeGRkl4_thqG91Lte-LfM6pStRg4!1v1c" target="_blank" rel="noopener">vrahnos - Summer 2024</a></li>
+        <li><a href="https://mega.nz/file/RbNwHTgC#GgjwUIdV4W2v2_lDNftpUz7OMVQ6fvu9bQkhUFoqcmk!1v1c" target="_blank" rel="noopener">Soam - Zachariah's mix</a></li>
+        <li><a href="https://mega.nz/file/MbMj0QTQ#BkGS_X8cjFWgNQK1NWD6lJxt1PN5QXiEDO9Rn153c2s!1v1c" target="_blank" rel="noopener">JNos - Diki</a></li>
+        <li><a href="https://mega.nz/file/1fNBBT7T#CBhsCdJl_KPa36L7d-CGRahUDBplMaZaBWBRIXORtqM!1v1c" target="_blank" rel="noopener">vrahnos - Vocal mix 2026</a></li>
+        <li><a href="https://mega.nz/file/hXVliSpL#ekMV3jpReQ7ntJQenxYoo71bYuEZzqL-xFc6dARXNIY!1v1c" target="_blank" rel="noopener">CNos - Chilledmix (vocal downtempo, acoustic)</a></li>
+        <li><a href="https://mega.nz/file/If1x1Z4T#QEDw_KvWC9SsHl-xQOK2lxglJP9eiJ4vMjID2-8bItg" target="_blank" rel="noopener">JNos - Prioni (acid/hard)</a></li>
+        <li><a href="https://mega.nz/file/ETkzRD5B#3wLKP8k3tREiq-Us_2D8YJFLLdtmgm_GACqKpKrUBjk" target="_blank" rel="noopener">vrahnos - Apollo 18 (progressive/deep)</a></li>
+        <li><a href="https://mega.nz/file/cfcHSQwB#ZElmwVmd8VtQjErHV-7A2sP6KvxD_pXGHj8rOBdUTmQ" target="_blank" rel="noopener">vrahnos - Allou (emotional, no vocals)</a></li>
+      </ol>
+    </div>
 
-    </ol>
-
-  
-  
-<div class="corner-notice" role="status" aria-live="polite">
-  <span class="corner-notice__text">Tracklist @ ID3 tags</span>
-</div>
-
-<style>
-  .corner-notice{
-    position: fixed;
-    right: 12px;
-    bottom: 12px;
-    max-width: min(320px, calc(100vw - 24px));
-    z-index: 9999;
-
-    display: block;
-    padding: 10px 12px;
-    background: rgba(20, 20, 20, 0.92);
-    color: #fff;
-    border: 1px solid rgba(255,255,255,0.18);
-    border-radius: 12px;
-
-    font: 600 12.5px/1.25 system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.25);
-    backdrop-filter: blur(6px);
-    -webkit-backdrop-filter: blur(6px);
-
-    /* Helps prevent accidental horizontal overflow */
-    overflow-wrap: anywhere;
-    word-break: break-word;
-    text-align: left;
-  }
-
-  @media (max-width: 420px){
-    .corner-notice{
-      right: 10px;
-      bottom: 10px;
-      padding: 9px 11px;
-      border-radius: 10px;
-      font-size: 12px;
-    }
-  }
-</style>
-
+    <div class="corner-notice" role="status" aria-live="polite">
+      <span class="corner-notice__text">Tracklist @ ID3 tags</span>
+    </div>
   </body>
 </html>
