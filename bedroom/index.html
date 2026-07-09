@@ -226,6 +226,70 @@
 
       .corner-notice__text{ position: relative; z-index: 1; }
 
+      .corner-notice--pros{
+        left: 12px;
+        right: auto;
+        cursor: pointer;
+        user-select: none;
+        outline: none;
+        background: rgba(0,0,0,.28);
+
+        overflow: visible;
+      }
+
+      .corner-notice--pros::before{
+        background:
+          radial-gradient(circle at 25% 30%, rgba(255,80,120,.75), transparent 55%),
+          radial-gradient(circle at 70% 40%, rgba(255,40,80,.55), transparent 55%),
+          radial-gradient(circle at 55% 85%, rgba(255,0,60,.50), transparent 60%),
+          conic-gradient(
+            from 90deg,
+            rgba(255,0,60,.55),
+            rgba(255,80,120,.55),
+            rgba(255,0,60,.55)
+          );
+        opacity: .42;
+        filter: blur(10px);
+      }
+
+      .pros-popover{
+        position: absolute;
+        left: 0;
+        bottom: calc(100% + 10px);
+        width: min(320px, calc(100vw - 24px));
+        max-height: 60vh;
+        overflow: auto;
+        padding: 10px;
+        background: rgba(0,0,0,.35);
+        border: 1px solid rgba(255,255,255,.16);
+        border-radius: 14px;
+        box-shadow: 0 14px 40px rgba(0,0,0,.45);
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+        display: none;
+        z-index: 10000;
+        pointer-events: auto;
+      }
+
+      .corner-notice--pros.open .pros-popover{ display: block; }
+
+      .pros-link{
+        display: block;
+        padding: 10px 10px;
+        border-radius: 12px;
+        text-decoration: none;
+        color: rgba(255,255,255,.95);
+        border: 1px solid rgba(255,255,255,.12);
+        background: rgba(255,255,255,.06);
+        margin: 6px 0;
+      }
+
+      .pros-link:active{ transform: translateY(1px); }
+      .pros-link:hover{
+        border-color: rgba(255,255,255,.22);
+        background: rgba(255,255,255,.10);
+      }
+
       @media (max-width: 420px){
         body{ padding: 14px; }
         .corner-notice{
@@ -233,6 +297,14 @@
           padding: 9px 11px;
           border-radius: 12px;
           font-size: 12px;
+        }
+        .corner-notice--pros{
+          left: 10px;
+          right: auto;
+        }
+        .pros-popover{
+          bottom: calc(100% + 8px);
+          border-radius: 12px;
         }
       }
 
@@ -260,17 +332,60 @@
         <li><a href="https://mega.nz/file/If1x1Z4T#QEDw_KvWC9SsHl-xQOK2lxglJP9eiJ4vMjID2-8bItg" target="_blank" rel="noopener">JNos - Prioni (acid/hard)</a></li>
         <li><a href="https://mega.nz/file/ETkzRD5B#3wLKP8k3tREiq-Us_2D8YJFLLdtmgm_GACqKpKrUBjk" target="_blank" rel="noopener">vrahnos - Apollo 18 (progressive/deep)</a></li>
         <li><a href="https://mega.nz/file/cfcHSQwB#ZElmwVmd8VtQjErHV-7A2sP6KvxD_pXGHj8rOBdUTmQ" target="_blank" rel="noopener">vrahnos - Allou (emotional, no vocals)</a></li>
-
-
-
-
-
-        
+        <li>From this point forward, all-around mixes will be named Apollo #*, unless they’re focused on a specific sub-genre</li>
       </ol>
     </div>
 
-    <div class="corner-notice" role="status" aria-live="polite">
-      <span class="corner-notice__text">Tracklist @ ID3 tags</span>
+    <div class="corner-notice corner-notice--pros" role="button" aria-label="Pros I like" tabindex="0" aria-expanded="false">
+      <span class="corner-notice__text">Shows I like</span>
+      <div class="pros-popover" role="dialog" aria-label="Pros I like links">
+        <a class="pros-link" href="https://www.youtube.com/playlist?list=PLtsi3zUEpVIymdxm5sbrQ0Pfao3O8-EC3" target="_blank" rel="noopener">VONYC Sessions</a>
+        <a class="pros-link" href="https://www.youtube.com/playlist?list=PLiV42ZGjG8cVqOpEfUG9ZWe1I9bJQJbS_" target="_blank" rel="noopener">Pure Trance Radio</a>
+        <a class="pros-link" href="https://www.youtube.com/playlist?list=PLnIyaLsnZb-ToPQX4Vddvi4gMtCcIxTGa" target="_blank" rel="noopener">JOOF Radio</a>
+        <a class="pros-link" href="https://www.youtube.com/playlist?list=PLPvYipFuuxZ2g8boLrQU4bSVflXs-Kwpi" target="_blank" rel="noopener">FSOE Radio</a>
+      </div>
     </div>
+
+    <div class="corner-notice" role="status" aria-live="polite">
+      <span class="corner-notice__text">
+For tracklist check the ID3 tags
+      </span>
+    </div>
+
+    <script>
+      (function () {
+        const el = document.querySelector('.corner-notice--pros');
+        if (!el) return;
+
+        const setOpen = (open) => {
+          el.classList.toggle('open', open);
+          el.setAttribute('aria-expanded', open ? 'true' : 'false');
+        };
+
+        const toggle = () => setOpen(!el.classList.contains('open'));
+
+        el.addEventListener('click', (e) => {
+          e.stopPropagation();
+          toggle();
+        });
+
+        el.addEventListener('keydown', (e) => {
+          if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            toggle();
+          } else if (e.key === 'Escape') {
+            setOpen(false);
+          }
+        });
+
+        document.addEventListener('click', () => setOpen(false));
+
+        el.querySelectorAll('a.pros-link').forEach(a => {
+          a.addEventListener('click', () => setOpen(false));
+        });
+
+        setOpen(false);
+      })();
+    </script>
   </body>
 </html>
