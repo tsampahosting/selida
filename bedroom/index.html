@@ -225,6 +225,45 @@
       }
 
       .corner-notice__text{ position: relative; z-index: 1; }
+      .corner-notice__subtext{
+        display: block;
+        font-size: 0.5em !important;
+        line-height: 1.1;
+      }
+      .corner-notice__subtext a{
+        display: inline !important;
+        width: auto !important;
+        max-width: none !important;
+        padding: 0 !important;
+
+        border-radius: 0 !important;
+        background: transparent !important;
+        border: none !important;
+        box-shadow: none !important;
+
+        position: static !important;
+        overflow: visible !important;
+
+        transform: none !important;
+        transition: none !important;
+
+        color: inherit !important;
+        text-decoration: underline !important;
+
+        backdrop-filter: none !important;
+        -webkit-backdrop-filter: none !important;
+      }
+
+      .corner-notice__subtext a::before,
+      .corner-notice__subtext a::after{
+        content: none !important;
+      }
+
+      .corner-notice__subtext a:hover{
+        transform: none !important;
+        border-color: transparent !important;
+        background: transparent !important;
+      }
 
       .corner-notice--pros{
         left: 12px;
@@ -312,6 +351,8 @@
         .bg-blob, .fx::after { animation: none !important; }
         a, a::after { transition: none !important; }
       }
+	.corner-notice__subtext{  text-align: right;}
+	}
     </style>
   </head>
 
@@ -332,15 +373,17 @@
         <li><a href="https://mega.nz/file/If1x1Z4T#QEDw_KvWC9SsHl-xQOK2lxglJP9eiJ4vMjID2-8bItg" target="_blank" rel="noopener">JNos - Prioni (acid/hard)</a></li>
         <li><a href="https://mega.nz/file/ETkzRD5B#3wLKP8k3tREiq-Us_2D8YJFLLdtmgm_GACqKpKrUBjk" target="_blank" rel="noopener">vrahnos - Apollo 18 (progressive/deep)</a></li>
         <li><a href="https://mega.nz/file/QOcARSDC#oAl5pbWg39ygcP0Zr2u52hRAv5omtE1eRJx3Eyrv1Vo" target="_blank" rel="noopener">vrahnos - Allou (emotional, no vocals)</a></li>
-        <li>  <a href="#" onclick="return false;" style="cursor: default;">    From this point forward, all-around mixes will be named Apollo #*, unless they’re focused on a specific sub-genre  </a></li>
+        <li>
+          <a href="#" onclick="return false;" style="cursor: default;">
+            From this point forward, all-around mixes will be named Apollo #*, unless they’re focused on a specific sub-genre
+          </a>
+        </li>
         <li><a href="https://mega.nz/file/5WcwmY6T#8pw6d9qMJpHMMdSrYwNtHFu08m9DogZfpy3nvrSL32Y" target="_blank" rel="noopener">vrahnos - Apollo 19</a></li>
-        <li><a href="https://mega.nz/file/gWVnVBzT#WIG5k3BfLy7JWxdUUrdd_4mRNGf6jzDkVuPeYvI9Sa8" target="_blank" rel="noopener">vrahnos - Psymix (When I hear a new track, I automatically imagine its transition. I just don’t get that from Psychedelic. I usually mix one about every five years)</a></li>
-      
-      
-      
-      
-      
-      
+        <li>
+          <a href="https://mega.nz/file/gWVnVBzT#WIG5k3BfLy7JWxdUUrdd_4mRNGf6jzDkVuPeYvI9Sa8" target="_blank" rel="noopener">
+            vrahnos - Psymix (I usually mix one about every five years)
+          </a>
+        </li>
       </ol>
     </div>
 
@@ -356,7 +399,10 @@
 
     <div class="corner-notice" role="status" aria-live="polite">
       <span class="corner-notice__text">
-Check the ID3 tags for the tracklist.
+        Check the ID3 tags for the tracklist.
+        <span class="corner-notice__subtext">
+	<a href="https://archive.org/details/vrahnos" target="_blank" rel="noopener" style="font-size: 1.2em;">IA Mirror</a>
+        </span>
       </span>
     </div>
 
