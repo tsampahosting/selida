@@ -331,19 +331,29 @@
 
       @media (max-width: 420px){
         body{ padding: 14px; }
+
         .corner-notice{
-          right: 10px; bottom: 10px;
+          position: static;
+          right: auto;
+          bottom: auto;
+          left: auto;
+          max-width: none;
+          margin: 10px auto 0;
           padding: 9px 11px;
           border-radius: 12px;
           font-size: 12px;
+          text-align: right;
         }
+
         .corner-notice--pros{
-          left: 10px;
+          left: auto;
           right: auto;
         }
+
         .pros-popover{
           bottom: calc(100% + 8px);
           border-radius: 12px;
+          width: min(320px, calc(100vw - 24px));
         }
       }
 
@@ -351,8 +361,8 @@
         .bg-blob, .fx::after { animation: none !important; }
         a, a::after { transition: none !important; }
       }
-	.corner-notice__subtext{  text-align: right;}
-	}
+
+      .corner-notice__subtext{  text-align: right;}
     </style>
   </head>
 
@@ -362,7 +372,7 @@
 
     <div class="wrap">
       <ol class="list">
-        <li><a href="https://mega.nz/file/caN3QCAC#oVYH8q-8zQpGMeyMGZ3fzYEPTnv43ONIYUJ48DrRmAY!1v1c" target="_blank" rel="noopener">vrahnos - Classic Trance (Latest release: 2007)</a></li>
+          <li><a href="https://mega.nz/file/caN3QCAC#oVYH8q-8zQpGMeyMGZ3fzYEPTnv43ONIYUJ48DrRmAY!1v1c" target="_blank" rel="noopener">vrahnos - Classic Trance (Latest release: 2007)</a></li>
         <li><a href="https://mega.nz/file/pS9EESDL#FoO2CtI2fuyGq9t_Qkue2vdPeqENwajbEbqL59-60so!1v1c" target="_blank" rel="noopener">vrahnos - Year mix 2023</a></li>
         <li><a href="https://mega.nz/file/0ScF3AQA#Apt5tJrXdFkVYmzD-1wMxBnO0YvzT7oL_zNp41UdOOw!1v1c" target="_blank" rel="noopener">vrahnos - Vocal mix</a></li>
         <li><a href="https://mega.nz/file/sblERajQ#6draqG7Bh2O0wEPdeGRkl4_thqG91Lte-LfM6pStRg4!1v1c" target="_blank" rel="noopener">vrahnos - Summer 2024</a></li>
@@ -390,14 +400,20 @@
 		<li><a href="https://mega.nz/file/wG0BxJyS#5MR1XHzQ9GxMxF2DauCYPsOdI4hu-IjyUlEZrvJ02PQ" target="_blank" rel="noopener">vrahnos - Classic Trance Vol:3 ★ (Latest release: 2003)</a></li>
 		<li><a href="https://mega.nz/file/kCEAEQoT#jeO3_tICIn-nMlq1DiSTJ_ckMnMnG7KopVUwVMn35s8" target="_blank" rel="noopener">vrahnos - Apollo 27</a></li>
 
+
+
+
+
+
+
+
+
+
+
+
+
+
 		  
-
-
-        
-
-
-		  
-        </li>
       </ol>
     </div>
 
@@ -415,7 +431,7 @@
       <span class="corner-notice__text">
         Check the ID3 tags for the tracklist.
         <span class="corner-notice__subtext">
-	<a href="https://archive.org/details/vrahnos" target="_blank" rel="noopener" style="font-size: 1.2em;">IA Mirror</a>
+          <a href="https://archive.org/details/vrahnos" target="_blank" rel="noopener" style="font-size: 1.2em;">IA Mirror</a>
         </span>
       </span>
     </div>
