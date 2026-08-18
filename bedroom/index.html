@@ -333,19 +333,23 @@
           border-radius: 12px;
           font-size: 12px;
           text-align: right;
+          overflow: visible !important;
         }
 
         .corner-notice--pros{
           left: auto;
           right: auto;
+          position: relative !important;
         }
 
         .pros-popover{
           bottom: calc(100% + 8px);
           border-radius: 12px;
-          width: min(320px, calc(100vw - 24px));
+          width: 100% !important;
+          left: 0 !important;
         }
       }
+
 
       @media (prefers-reduced-motion: reduce){
         .bg-blob, .fx::after { animation: none !important; }
