@@ -453,37 +453,48 @@
     <script>
       (function () {
         const el = document.querySelector('.corner-notice--pros');
-        if (!el) return;
+        const popover = document.querySelector('.pros-popover');
+        if (!el || !popover) return;
 
         const setOpen = (open) => {
           el.classList.toggle('open', open);
           el.setAttribute('aria-expanded', open ? 'true' : 'false');
         };
 
-        const toggle = () => setOpen(!el.classList.contains('open'));
-
-        el.addEventListener('click', (e) => {
-          e.stopPropagation();
-          toggle();
-        });
+        const titleSpan = el.querySelector('.corner-notice__text');
+        
+        if (titleSpan) {
+          titleSpan.addEventListener('click', (e) => {
+            e.stopPropagation();
+            setOpen(!el.classList.contains('open'));
+          });
+        }
 
         el.addEventListener('keydown', (e) => {
           if (e.key === 'Enter' || e.key === ' ') {
             e.preventDefault();
-            toggle();
+            setOpen(!el.classList.contains('open'));
           } else if (e.key === 'Escape') {
             setOpen(false);
           }
         });
 
-        document.addEventListener('click', () => setOpen(false));
+        document.addEventListener('click', (e) => {
+          if (!el.contains(e.target)) {
+            setOpen(false);
+          }
+        });
 
-        el.querySelectorAll('a.pros-link').forEach(a => {
-          a.addEventListener('click', () => setOpen(false));
+        popover.querySelectorAll('a.pros-link').forEach(a => {
+          a.addEventListener('click', (e) => {
+            e.stopPropagation(); 
+            setOpen(false);
+          });
         });
 
         setOpen(false);
       })();
     </script>
+
   </body>
 </html>
