@@ -22,36 +22,134 @@
         line-height: 1.4;
         color: var(--text);
         overflow-x: hidden;
-
-        background:
-          radial-gradient(900px 500px at 10% 10%, rgba(255,0,180,.35), transparent 55%),
-          radial-gradient(700px 520px at 85% 20%, rgba(0,255,255,.28), transparent 60%),
-          radial-gradient(650px 450px at 55% 80%, rgba(255,255,0,.20), transparent 55%),
-          linear-gradient(120deg, #09061a 0%, #130a2a 45%, #070514 100%);
+        background: linear-gradient(120deg, #09061a 0%, #130a2a 45%, #070514 100%);
       }
 
-      .bg-blob{
-        position: fixed;
-        inset: -40vmax;
-        pointer-events: none;
-        z-index: -1;
-        filter: blur(40px) saturate(140%);
-        opacity: .85;
+      @media (hover: hover) {
+        body {
+          background:
+            radial-gradient(900px 500px at 10% 10%, rgba(255,0,180,.35), transparent 55%),
+            radial-gradient(700px 520px at 85% 20%, rgba(0,255,255,.28), transparent 60%),
+            radial-gradient(650px 450px at 55% 80%, rgba(255,255,0,.20), transparent 55%),
+            linear-gradient(120deg, #09061a 0%, #130a2a 45%, #070514 100%);
+        }
 
-        background:
-          radial-gradient(circle at 10% 10%, rgba(255,0,180,.35), transparent 55%),
-          radial-gradient(circle at 85% 20%, rgba(0,255,255,.28), transparent 60%),
-          radial-gradient(circle at 55% 80%, rgba(255,255,0,.22), transparent 55%),
-          conic-gradient(
-            from 0deg,
-            rgba(255,0,180,.25),
-            rgba(0,255,255,.22),
-            rgba(255,255,0,.18),
-            rgba(255,0,120,.20),
-            rgba(255,0,180,.25)
+        .bg-blob{
+          position: fixed;
+          inset: -40vmax;
+          pointer-events: none;
+          z-index: -1;
+          filter: blur(40px) saturate(140%);
+          opacity: .85;
+          background:
+            radial-gradient(circle at 10% 10%, rgba(255,0,180,.35), transparent 55%),
+            radial-gradient(circle at 85% 20%, rgba(0,255,255,.28), transparent 60%),
+            radial-gradient(circle at 55% 80%, rgba(255,255,0,.22), transparent 55%),
+            conic-gradient(
+              from 0deg,
+              rgba(255,0,180,.25),
+              rgba(0,255,255,.22),
+              rgba(255,255,0,.18),
+              rgba(255,0,120,.20),
+              rgba(255,0,180,.25)
+            );
+          animation: blobWander 14s ease-in-out infinite;
+        }
+
+        .fx::after{
+          content:"";
+          position:absolute; inset:-20%;
+          background-image:
+            url("data:image/svg+xml,%3Csvg xmlns='http://w3.org' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)' opacity='.35'/%3E%3C/svg%3E");
+          opacity: .12;
+          transform: rotate(6deg);
+          animation: noiseDrift 6s steps(2) infinite;
+        }
+
+        a {
+          backdrop-filter: blur(10px);
+          -webkit-backdrop-filter: blur(10px);
+        }
+
+        a::before{
+          content:"";
+          position:absolute;
+          inset: -2px;
+          background: conic-gradient(
+            from 180deg,
+            rgba(255,0,180,.7),
+            rgba(0,255,255,.7),
+            rgba(255,255,0,.65),
+            rgba(255,0,120,.65),
+            rgba(255,0,180,.7)
           );
+          opacity: .0;
+          transition: opacity .2s ease;
+          filter: blur(8px);
+        }
 
-        animation: blobWander 14s ease-in-out infinite;
+        a:hover{
+          transform: translateY(-2px);
+          border-color: rgba(255,255,255,.22);
+          background: rgba(25, 18, 55, .56);
+        }
+        a:hover::before{ opacity: .85; }
+        a::after{
+          content:"";
+          position:absolute;
+          inset: 0;
+          background: linear-gradient(
+            120deg,
+            transparent 0%,
+            rgba(255,255,255,.18) 45%,
+            transparent 60%
+          );
+          transform: translateX(-120%);
+          transition: transform .55s ease;
+          mix-blend-mode: overlay;
+        }
+        a:hover::after{ transform: translateX(120%); }
+
+        .corner-notice{
+          backdrop-filter: blur(10px);
+          -webkit-backdrop-filter: blur(10px);
+        }
+
+        .corner-notice::before{
+          content:"";
+          position:absolute;
+          inset:-2px;
+          background: conic-gradient(
+            from 90deg,
+            rgba(255,0,180,.65),
+            rgba(0,255,255,.65),
+            rgba(255,255,0,.55),
+            rgba(255,0,120,.55),
+            rgba(255,0,180,.65)
+          );
+          opacity: .35;
+          filter: blur(10px);
+        }
+
+        .corner-notice--pros::before{
+          background:
+            radial-gradient(circle at 25% 30%, rgba(255,80,120,.75), transparent 55%),
+            radial-gradient(circle at 70% 40%, rgba(255,40,80,.55), transparent 55%),
+            radial-gradient(circle at 55% 85%, rgba(255,0,60,.50), transparent 60%),
+            conic-gradient(
+              from 90deg,
+              rgba(255,0,60,.55),
+              rgba(255,80,120,.55),
+              rgba(255,0,60,.55)
+            );
+          opacity: .42;
+          filter: blur(10px);
+        }
+
+        .pros-popover{
+          backdrop-filter: blur(10px);
+          -webkit-backdrop-filter: blur(10px);
+        }
       }
 
       @keyframes blobWander{
@@ -82,16 +180,6 @@
         mix-blend-mode: overlay;
       }
 
-      .fx::after{
-        content:"";
-        position:absolute; inset:-20%;
-        background-image:
-          url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)' opacity='.35'/%3E%3C/svg%3E");
-        opacity: .12;
-        transform: rotate(6deg);
-        animation: noiseDrift 6s steps(2) infinite;
-      }
-
       @keyframes noiseDrift{
         0% { transform: translate(0,0) rotate(6deg); }
         25% { transform: translate(-2%, 1%) rotate(6deg); }
@@ -117,63 +205,15 @@
         border-radius: 16px;
         text-decoration: none;
         color: inherit;
-
         background: var(--card);
         border: 1px solid var(--card-border);
-        box-shadow:
-          0 10px 30px var(--shadow),
-          inset 0 0 0 1px rgba(255,255,255,.06);
-
+        box-shadow: 0 10px 30px var(--shadow), inset 0 0 0 1px rgba(255,255,255,.06);
         word-break: break-word;
-        backdrop-filter: blur(10px);
-        -webkit-backdrop-filter: blur(10px);
-
         position: relative;
         overflow: hidden;
-
         transform: translateZ(0);
         transition: transform .2s ease, border-color .2s ease, background .2s ease;
       }
-
-      a::before{
-        content:"";
-        position:absolute;
-        inset: -2px;
-        background: conic-gradient(
-          from 180deg,
-          rgba(255,0,180,.7),
-          rgba(0,255,255,.7),
-          rgba(255,255,0,.65),
-          rgba(255,0,120,.65),
-          rgba(255,0,180,.7)
-        );
-        opacity: .0;
-        transition: opacity .2s ease;
-        filter: blur(8px);
-      }
-
-      a:hover{
-        transform: translateY(-2px);
-        border-color: rgba(255,255,255,.22);
-        background: rgba(25, 18, 55, .56);
-      }
-      a:hover::before{ opacity: .85; }
-
-      a::after{
-        content:"";
-        position:absolute;
-        inset: 0;
-        background: linear-gradient(
-          120deg,
-          transparent 0%,
-          rgba(255,255,255,.18) 45%,
-          transparent 60%
-        );
-        transform: translateX(-120%);
-        transition: transform .55s ease;
-        mix-blend-mode: overlay;
-      }
-      a:hover::after{ transform: translateX(120%); }
 
       .wrap{
         display: flex;
@@ -190,65 +230,36 @@
         bottom: 12px;
         max-width: min(320px, calc(100vw - 24px));
         z-index: 9999;
-
         display: block;
         padding: 10px 12px;
-        background: rgba(0,0,0,.28);
+        background: rgba(0,0,0,.65);
         color: rgba(255,255,255,.94);
         border: 1px solid rgba(255,255,255,.16);
         border-radius: 14px;
-
         font: 700 12.5px/1.25 system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
-
         box-shadow: 0 14px 40px rgba(0,0,0,.35);
-        backdrop-filter: blur(10px);
-        -webkit-backdrop-filter: blur(10px);
-
         text-align: left;
         overflow: hidden;
       }
 
-      .corner-notice::before{
-        content:"";
-        position:absolute;
-        inset:-2px;
-        background: conic-gradient(
-          from 90deg,
-          rgba(255,0,180,.65),
-          rgba(0,255,255,.65),
-          rgba(255,255,0,.55),
-          rgba(255,0,120,.55),
-          rgba(255,0,180,.65)
-        );
-        opacity: .35;
-        filter: blur(10px);
-      }
       .corner-notice__text{ position: relative; z-index: 1; }
-      .corner-notice__subtext{  display: block;  font-size: 0.85em !important;  line-height: 1.1;}
-     .corner-notice__subtext a{  font-size: 0.6em !important;  line-height: 1.1;}
-      }
+      .corner-notice__subtext{ display: block; font-size: 0.85em !important; line-height: 1.1; text-align: right;}
+      
       .corner-notice__subtext a{
         display: inline !important;
         width: auto !important;
         max-width: none !important;
         padding: 0 !important;
-
         border-radius: 0 !important;
         background: transparent !important;
         border: none !important;
         box-shadow: none !important;
-
         position: static !important;
         overflow: visible !important;
-
         transform: none !important;
         transition: none !important;
-
         color: inherit !important;
         text-decoration: underline !important;
-
-        backdrop-filter: none !important;
-        -webkit-backdrop-filter: none !important;
       }
 
       .corner-notice__subtext a::before,
@@ -268,24 +279,7 @@
         cursor: pointer;
         user-select: none;
         outline: none;
-        background: rgba(0,0,0,.28);
-
         overflow: visible;
-      }
-
-      .corner-notice--pros::before{
-        background:
-          radial-gradient(circle at 25% 30%, rgba(255,80,120,.75), transparent 55%),
-          radial-gradient(circle at 70% 40%, rgba(255,40,80,.55), transparent 55%),
-          radial-gradient(circle at 55% 85%, rgba(255,0,60,.50), transparent 60%),
-          conic-gradient(
-            from 90deg,
-            rgba(255,0,60,.55),
-            rgba(255,80,120,.55),
-            rgba(255,0,60,.55)
-          );
-        opacity: .42;
-        filter: blur(10px);
       }
 
       .pros-popover{
@@ -296,12 +290,10 @@
         max-height: 60vh;
         overflow: auto;
         padding: 10px;
-        background: rgba(0,0,0,.35);
+        background: rgba(12, 10, 24, .95);
         border: 1px solid rgba(255,255,255,.16);
         border-radius: 14px;
         box-shadow: 0 14px 40px rgba(0,0,0,.45);
-        backdrop-filter: blur(10px);
-        -webkit-backdrop-filter: blur(10px);
         display: none;
         z-index: 10000;
         pointer-events: auto;
@@ -358,18 +350,15 @@
         .bg-blob, .fx::after { animation: none !important; }
         a, a::after { transition: none !important; }
       }
-
-      .corner-notice__subtext{  text-align: right;}
     </style>
   </head>
-
   <body>
     <div class="bg-blob" aria-hidden="true"></div>
     <div class="fx" aria-hidden="true"></div>
 
     <div class="wrap">
       <ol class="list">
-          <li><a href="https://mega.nz/file/caN3QCAC#oVYH8q-8zQpGMeyMGZ3fzYEPTnv43ONIYUJ48DrRmAY!1v1c" target="_blank" rel="noopener">vrahnos - Classic Trance (Latest release: 2007)</a></li>
+        <li><a href="https://mega.nz/file/caN3QCAC#oVYH8q-8zQpGMeyMGZ3fzYEPTnv43ONIYUJ48DrRmAY!1v1c" target="_blank" rel="noopener">vrahnos - Classic Trance (Latest release: 2007)</a></li>
         <li><a href="https://mega.nz/file/pS9EESDL#FoO2CtI2fuyGq9t_Qkue2vdPeqENwajbEbqL59-60so!1v1c" target="_blank" rel="noopener">vrahnos - Year mix 2023</a></li>
         <li><a href="https://mega.nz/file/0ScF3AQA#Apt5tJrXdFkVYmzD-1wMxBnO0YvzT7oL_zNp41UdOOw!1v1c" target="_blank" rel="noopener">vrahnos - Vocal mix</a></li>
         <li><a href="https://mega.nz/file/sblERajQ#6draqG7Bh2O0wEPdeGRkl4_thqG91Lte-LfM6pStRg4!1v1c" target="_blank" rel="noopener">vrahnos - Summer 2024</a></li>
@@ -383,7 +372,7 @@
         <li><a href="#" onclick="return false;" style="cursor: default;">Going forward, all-around mixes will be named Apollo #*, unless they’re focused on a specific sub-genre</a></li>
         <li><a href="https://mega.nz/file/5WcwmY6T#8pw6d9qMJpHMMdSrYwNtHFu08m9DogZfpy3nvrSL32Y" target="_blank" rel="noopener">vrahnos - Apollo 19 ★</a></li>
         <li><a href="https://mega.nz/file/gWVnVBzT#WIG5k3BfLy7JWxdUUrdd_4mRNGf6jzDkVuPeYvI9Sa8" target="_blank" rel="noopener">vrahnos - Psymix (I usually mix one about every five years)</a></li>
-		<li><a href="https://mega.nz/file/QG9g0T5a#Xy6mxSIAP2QMIxompTwGhkTyuqt7GkUOJJr54qGFEJw" target="_blank" rel="noopener">vrahnos - Apollo 20</a></li>
+	<li><a href="https://mega.nz/file/QG9g0T5a#Xy6mxSIAP2QMIxompTwGhkTyuqt7GkUOJJr54qGFEJw" target="_blank" rel="noopener">vrahnos - Apollo 20</a></li>
     	<li><a href="https://mega.nz/file/1TFxxZAT#8SIqJU-TRm6tiZQFy7PcbIqSdJQu6FnnY39JulWZ8J0" target="_blank" rel="noopener">vrahnos - Classic Trance Vol:2 (Latest release: 2001)</a></li>
        	<li><a href="https://mega.nz/file/dGNlCLQC#45Sq3awQnUnpmUH1OPmQvdBCiMy37lUF3qqpaJDYkqo" target="_blank" rel="noopener">vrahnos - Apollo 21 ★</a></li>
        	<li><a href="https://mega.nz/file/FDEiQTTA#NgKJNLteukGFk8OzFv8IAWTnFQqOpcEP6i4zpg3_vfU" target="_blank" rel="noopener">vrahnos - Allou 2 ★</a></li>
@@ -394,34 +383,35 @@
        	<li><a href="https://mega.nz/file/VWlREbhJ#fj-cnAvR3Hrs7HcAGtlYx8sZEoJfA9FIIL2kr4yr6TA" target="_blank" rel="noopener">vrahnos - Apollo 24 ★</a></li>
        	<li><a href="https://mega.nz/file/YLNkCQqB#SvoagDOGvGWC1poWlJtbgJe24Mqu6LC0VVg18cqD56k" target="_blank" rel="noopener">vrahnos - Apollo 25</a></li>
        	<li><a href="https://mega.nz/file/FbFSETzD#YDkUBLMRwl80z9Bk6uOIFXPXx3cjlPeQ9Lsf83kdcpU" target="_blank" rel="noopener">vrahnos - Apollo 26 (I started this with the main idea of making the 'Allou vocal edition', prep folder 'progorwhatevervocalmix', master file 'drifting', Apollo it is :P, mostly oldies, only 3 instrumentals)</a></li>
-		<li><a href="https://mega.nz/file/wG0BxJyS#5MR1XHzQ9GxMxF2DauCYPsOdI4hu-IjyUlEZrvJ02PQ" target="_blank" rel="noopener">vrahnos - Classic Trance Vol:3 ★ (Latest release: 2003)</a></li>
-		<li><a href="https://mega.nz/file/kCEAEQoT#jeO3_tICIn-nMlq1DiSTJ_ckMnMnG7KopVUwVMn35s8" target="_blank" rel="noopener">vrahnos - Apollo 27</a></li>
-		<li><a href="https://mega.nz/file/JfdX1CxD#a8kYK1n-p6Kw7ihSDpkckDbxQPLQB12ZJkEQGhYVXiY" target="_blank" rel="noopener">vrahnos - Ekpliksi</a></li>
-  		<li><a href="https://mega.nz/file/QW91UQhZ#x-M4AcqK0cXKNISRQ9MdPTsHNn_xABwKbAIQ4wFU2Mo" target="_blank" rel="noopener">vrahnos - Allou 3</a></li>
-		<li><a href="https://mega.nz/file/BPdX1TgZ#5KH2PcpAtVkXzqVI4h5d0XhE75oZL0QeYaBOsg95Jbg" target="_blank" rel="noopener">vrahnos - Vocal 01:00 ★★</a></li>
-  		<li><a href="https://mega.nz/file/ZXM0lL5Y#iARo_ujsC5o8idSqeXFmrKGPTWnBMjpBZ0WiZY4kLSQ" target="_blank" rel="noopener">vrahnos - Entrancing (RDH) ★</a></li>
-  		<li><a href="https://mega.nz/file/NW8lnIRL#igK0UOoZmLwm6oP1tudEn4c9oOxz-6stjA1aeGyZhxE" target="_blank" rel="noopener">vrahnos - Apollo 28 ★</a></li>
-  		<li><a href="https://mega.nz/file/tKlkHboT#mrxxaB3Dj0_EVltHOKWZ9ZTNTfcSXKT91cdZisAEgd8" target="_blank" rel="noopener">vrahnos - Apollo 29 </a></li>
-  		<li><a href="https://mega.nz/file/QeMT3L7Z#bjc5vF39Cm-PZTm424gM33hdUvFoJevozb8ZSyaue0g" target="_blank" rel="noopener">vrahnos - Apollo 30 ★</a></li>
-   		<li><a href="https://mega.nz/file/sal31AwD#MXuTPcJfeHQxPgPFw5XZy-TGHu6DItn3HOJHd1NsieU" target="_blank" rel="noopener">vrahnos - Tribute: Sarah De Warren</a></li>
-  		<li><a href="https://mega.nz/file/FbtDHSQJ#64Q8pGHeu7bTte2IfSwBmdJzWqepz0LDELcdZ2nKaC8" target="_blank" rel="noopener">vrahnos - Apollo 31</a></li>
-		<li><a href="https://mega.nz/file/8bUSUaSB#S2SPdawcKqtdIzEp-f1R4XGb_Zy-I6FauWmbqDQTcvc" target="_blank" rel="noopener">vrahnos - Apollo 32 ★</a></li>
-    	<li><a href="https://mega.nz/file/ZSFSVZrD#cZtJI0VCLAihjJ6W6G1FUhPNXpdCLVyEh4CdvRdiXGY" target="_blank" rel="noopener">vrahnos - Classic Trance Vol:4 ★ (Latest release: 2008)</a></li>
-		<li><a href="https://mega.nz/file/VXVlwbJC#s5fmFE_NegrjuW-_vIIY9faKDkIiDX6EzZb1F-uRc7U" target="_blank" rel="noopener">vrahnos - Apollo 33</a></li>
-    	<li><a href="https://mega.nz/file/9HljDaRY#Epk8ANJZGesWltxkxh7_r_ZYKQgQtWo6inuLEuwpFHQ" target="_blank" rel="noopener">vrahnos - Classic Trance Vol:5 (Latest release: 2012)</a></li>
-      	<li><a href="https://mega.nz/file/gDMCFJRR#F9ucXhMIVkzq71a-bLKVKLQshMU0ey4jFX34OQZzkJQ" target="_blank" rel="noopener">vrahnos - Melodic Trance ★</a></li>
-		<li><a href="https://mega.nz/file/deUTkDRC#zI7ouQSjPtZA66l1Gzhd4HEjA1IEgOzwXoHtGq1mfwM" target="_blank" rel="noopener">vrahnos - Apollo 34</a></li>
-		<li><a href="https://mega.nz/file/sXMngDoJ#ExzoSg100JX9VhsxK0w0diPAeHFOiiQklkC9VeXyDMI" target="_blank" rel="noopener">vrahnos - Apollo 35 ★</a></li>
-		<li><a href="https://mega.nz/file/cGsiQIZZ#H-P_7AVUFQL1M1N3JSUDCa5TWJ55pucz0Wv26h8TskY" target="_blank" rel="noopener">vrahnos - Label Tribute: In Trance We Trust (2021-2026)</a></li>
-		<li><a href="https://mega.nz/file/MCknEY5R#2r3LQi8GSroLhWUZ4wNJEQJf16k30bp7kXFXYJe8PJ8" target="_blank" rel="noopener">vrahnos - Vocal Trance 2025-26 ★★</a></li>
-		<li><a href="https://mega.nz/file/FKEHHIrD#FLgdwNu6Ax6I06Ke1Ly31iiu74WbvU8WZb4zJ3lLwQU" target="_blank" rel="noopener">vrahnos - Apollo 36 ★</a></li>
-    	<li><a href="https://mega.nz/file/kHUETDBb#bZAEbb_KV_yCH6383W0vvwNsJIp4r1sClHm1Ytk07jI" target="_blank" rel="noopener">vrahnos - Classic Trance Vol:6 (Latest release: 2012)</a></li>
-		<li><a href="https://mega.nz/file/sDNzjJBL#Kn3lgy3jXDyDg7iZDIuiNSI5PgXgEeZFC24Lik-yNqg" target="_blank" rel="noopener">vrahnos - Carpet Bombing ★ (Vocal 144–150 BPM. average transitions every ~200s)</a></li>
-		<li><a href="https://mega.nz/file/xONUCbCQ#IvFjAOA5nSvsl9JYJlyEpSWh5ZCsZhGJ0DEReqLhPdk" target="_blank" rel="noopener">vrahnos - Compilation Mix: Sound Of Emotion I & II By AROS Music ★★ (Chinese Artists, very melodic, my kind of Trance)</a></li>
-		<li><a href="https://mega.nz/file/MfFBRZRQ#BShEtJlJ-rV-setwVBiCLsgHdvTuzh9QhOz8u7S8Z9E" target="_blank" rel="noopener">vrahnos - Apollo 37 ★★</a></li>
-		<li><a href="https://mega.nz/file/4OlgFYSC#6ebHZUFKVLqGTk3KLTyuI89nkilbDtfJlXSBayzSZJM" target="_blank" rel="noopener">vrahnos - Pure Trance Vol:1 ★★ (Pure Trance Recordings Tribute, the Progressive and NEON sublabels are obviously included)</a></li>
-		<li><a href="https://mega.nz/file/sSVm0J6b#ZB-UIDEl8w7kBt6E0Lfv-gP25sqoQ8uXku023vUnEUA" target="_blank" rel="noopener">vrahnos - Pure Trance Vol:2 ★★ (Vol:1 tracklist has some incorrect entries, a vocalist is missing, a remixer is missing, i asked Gemini for proper capitalization and typo corrections and it shit the bed)</a></li>
-		<li><a href="https://mega.nz/file/MKUyGYIA#ulwgBIH4yuKdJk790mWuNi77_zrP-wYCsQgDxX2ihcc" target="_blank" rel="noopener">vrahnos - Pure Trance Vol:1.5 ★★★ (1.5 because it has a 7 track sequence from Vol:1, originally made for youtube only, too good to not be listed here, 128bpm max)</a></li>
+	<li><a href="https://mega.nz/file/wG0BxJyS#5MR1XHzQ9GxMxF2DauCYPsOdI4hu-IjyUlEZrvJ02PQ" target="_blank" rel="noopener">vrahnos - Classic Trance Vol:3 ★ (Latest release: 2003)</a></li>
+	<li><a href="https://mega.nz/file/kCEAEQoT#jeO3_tICIn-nMlq1DiSTJ_ckMnMnG7KopVUwVMn35s8" target="_blank" rel="noopener">vrahnos - Apollo 27</a></li>
+	<li><a href="https://mega.nz/file/JfdX1CxD#a8kYK1n-p6Kw7ihSDpkckDbxQPLQB12ZJkEQGhYVXiY" target="_blank" rel="noopener">vrahnos - Ekpliksi</a></li>
+  	<li><a href="https://mega.nz/file/QW91UQhZ#x-M4AcqK0cXKNISRQ9MdPTsHNn_xABwKbAIQ4wFU2Mo" target="_blank" rel="noopener">vrahnos - Allou 3</a></li>
+	<li><a href="https://mega.nz/file/BPdX1TgZ#5KH2PcpAtVkXzqVI4h5d0XhE75oZL0QeYaBOsg95Jbg" target="_blank" rel="noopener">vrahnos - Vocal 01:00 ★★</a></li>
+  	<li><a href="https://mega.nz/file/ZXM0lL5Y#iARo_ujsC5o8idSqeXFmrKGPTWnBMjpBZ0WiZY4kLSQ" target="_blank" rel="noopener">vrahnos - Entrancing (RDH) ★</a></li>
+  	<li><a href="https://mega.nz/file/NW8lnIRL#igK0UOoZmLwm6oP1tudEn4c9oOxz-6stjA1aeGyZhxE" target="_blank" rel="noopener">vrahnos - Apollo 28 ★</a></li>
+  	<li><a href="https://mega.nz/file/tKlkHboT#mrxxaB3Dj0_EVltHOKWZ9ZTNTfcSXKT91cdZisAEgd8" target="_blank" rel="noopener">vrahnos - Apollo 29 </a></li>
+  	<li><a href="https://mega.nz/file/QeMT3L7Z#bjc5vF39Cm-PZTm424gM33hdUvFoJevozb8ZSyaue0g" target="_blank" rel="noopener">vrahnos - Apollo 30 ★</a></li>
+   	<li><a href="https://mega.nz/file/sal31AwD#MXuTPcJfeHQxPgPFw5XZy-TGHu6DItn3HOJHd1NsieU" target="_blank" rel="noopener">vrahnos - Tribute: Sarah De Warren</a></li>
+  	<li><a href="https://mega.nz/file/FbtDHSQJ#64Q8pGHeu7bTte2IfSwBmdJzWqepz0LDELcdZ2nKaC8" target="_blank" rel="noopener">vrahnos - Apollo 31</a></li>
+	<li><a href="https://mega.nz/file/8bUSUaSB#S2SPdawcKqtdIzEp-f1R4XGb_Zy-I6FauWmbqDQTcvc" target="_blank" rel="noopener">vrahnos - Apollo 32 ★</a></li>
+    <li><a href="https://mega.nz/file/ZSFSVZrD#cZtJI0VCLAihjJ6W6G1FUhPNXpdCLVyEh4CdvRdiXGY" target="_blank" rel="noopener">vrahnos - Classic Trance Vol:4 ★ (Latest release: 2008)</a></li>
+	<li><a href="https://mega.nz/file/VXVlwbJC#s5fmFE_NegrjuW-_vIIY9faKDkIiDX6EzZb1F-uRc7U" target="_blank" rel="noopener">vrahnos - Apollo 33</a></li>
+    <li><a href="https://mega.nz/file/9HljDaRY#Epk8ANJZGesWltxkxh7_r_ZYKQgQtWo6inuLEuwpFHQ" target="_blank" rel="noopener">vrahnos - Classic Trance Vol:5 (Latest release: 2012)</a></li>
+    <li><a href="https://mega.nz/file/gDMCFJRR#F9ucXhMIVkzq71a-bLKVKLQshMU0ey4jFX34OQZzkJQ" target="_blank" rel="noopener">vrahnos - Melodic Trance ★</a></li>
+	<li><a href="https://mega.nz/file/deUTkDRC#zI7ouQSjPtZA66l1Gzhd4HEjA1IEgOzwXoHtGq1mfwM" target="_blank" rel="noopener">vrahnos - Apollo 34</a></li>
+	<li><a href="https://mega.nz/file/sXMngDoJ#ExzoSg100JX9VhsxK0w0diPAeHFOiiQklkC9VeXyDMI" target="_blank" rel="noopener">vrahnos - Apollo 35 ★</a></li>
+	<li><a href="https://mega.nz/file/cGsiQIZZ#H-P_7AVUFQL1M1N3JSUDCa5TWJ55pucz0Wv26h8TskY" target="_blank" rel="noopener">vrahnos - Label Tribute: In Trance We Trust (2021-2026)</a></li>
+	<li><a href="https://mega.nz/file/MCknEY5R#2r3LQi8GSroLhWUZ4wNJEQJf16k30bp7kXFXYJe8PJ8" target="_blank" rel="noopener">vrahnos - Vocal Trance 2025-26 ★★</a></li>
+	<li><a href="https://mega.nz/file/FKEHHIrD#FLgdwNu6Ax6I06Ke1Ly31iiu74WbvU8WZb4zJ3lLwQU" target="_blank" rel="noopener">vrahnos - Apollo 36 ★</a></li>
+    <li><a href="https://mega.nz/file/kHUETDBb#bZAEbb_KV_yCH6383W0vvwNsJIp4r1sClHm1Ytk07jI" target="_blank" rel="noopener">vrahnos - Classic Trance Vol:6 (Latest release: 2012)</a></li>
+	<li><a href="https://mega.nz/file/sDNzjJBL#Kn3lgy3jXDyDg7iZDIuiNSI5PgXgEeZFC24Lik-yNqg" target="_blank" rel="noopener">vrahnos - Carpet Bombing ★ (Vocal 144–150 BPM. average transitions every ~200s)</a></li>
+	<li><a href="https://mega.nz/file/xONUCbCQ#IvFjAOA5nSvsl9JYJlyEpSWh5ZCsZhGJ0DEReqLhPdk" target="_blank" rel="noopener">vrahnos - Compilation Mix: Sound Of Emotion I & II By AROS Music ★★ (Chinese Artists, very melodic, my kind of Trance)</a></li>
+	<li><a href="https://mega.nz/file/MfFBRZRQ#BShEtJlJ-rV-setwVBiCLsgHdvTuzh9QhOz8u7S8Z9E" target="_blank" rel="noopener">vrahnos - Apollo 37 ★★</a></li>
+	<li><a href="https://mega.nz/file/4OlgFYSC#6ebHZUFKVLqGTk3KLTyuI89nkilbDtfJlXSBayzSZJM" target="_blank" rel="noopener">vrahnos - Pure Trance Vol:1 ★★ (Pure Trance Recordings Tribute, the Progressive and NEON sublabels are obviously included)</a></li>
+	<li><a href="https://mega.nz/file/sSVm0J6b#ZB-UIDEl8w7kBt6E0Lfv-gP25sqoQ8uXku023vUnEUA" target="_blank" rel="noopener">vrahnos - Pure Trance Vol:2 ★★ (Vol:1 tracklist has some incorrect entries, a vocalist is missing, a remixer is missing, i asked Gemini for proper capitalization and typo corrections and it shit the bed)</a></li>
+	<li><a href="https://mega.nz/file/MKUyGYIA#ulwgBIH4yuKdJk790mWuNi77_zrP-wYCsQgDxX2ihcc" target="_blank" rel="noopener">vrahnos - Pure Trance Vol:1.5 ★★★ (1.5 because it has a 7 track sequence from Vol:1, originally made for youtube only, too good to not be listed here, 128bpm max)</a></li>
+	<li><a href="https://mega.nz/file/1CU3iKTD#BorMRaJjUhNgtdneP2VGIkOmVE4t1JOmc8xKfHyXiW0" target="_blank" rel="noopener">vrahnos - Apollo 38</a></li>
 
 
 
@@ -436,15 +426,6 @@
 
 
 
-
-
-
-
-
-
-
-
-		  
       </ol>
     </div>
 
@@ -458,9 +439,15 @@
       </div>
     </div>
 
-
-<div class="corner-notice" role="status" aria-live="polite">  <span class="corner-notice__text">    Stars reflect whether I find ALL transitions acceptable and in terms of flow. Obviously, all tracks are good.    <span class="corner-notice__subtext">      Check the ID3 tags for the tracklist.      <a href="https://archive.org/details/vrahnos" target="_blank" rel="noopener">IA Mirror</a>    </span>  </span>
-
+    <div class="corner-notice" role="status" aria-live="polite">  
+      <span class="corner-notice__text">    
+        Stars reflect whether I find ALL transitions acceptable and in terms of flow. Obviously, all tracks are good.    
+        <span class="corner-notice__subtext">      
+          Check the ID3 tags for the tracklist.      
+          <a href="https://archive.org/details/vrahnos" target="_blank" rel="noopener">IA Mirror</a>    
+        </span>  
+      </span>
+    </div>
 
     <script>
       (function () {
